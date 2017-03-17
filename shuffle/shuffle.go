@@ -1,3 +1,4 @@
+// Package shuffle implements cryptographic shuffling.
 package shuffle // import "vuvuzela.io/crypto/shuffle"
 
 import (

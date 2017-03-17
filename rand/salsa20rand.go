@@ -1,3 +1,4 @@
+// Package rand implements a faster CSPRNG.
 package rand // import "vuvuzela.io/crypto/rand"
 
 import (

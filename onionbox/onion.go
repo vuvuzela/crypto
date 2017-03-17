@@ -1,3 +1,4 @@
+// Package onionbox implements onion encryption.
 package onionbox // import "vuvuzela.io/crypto/onionbox"
 
 import (
