@@ -166,7 +166,7 @@ func BenchmarkDecryptRandom(b *testing.B) {
 
 	invalidBytes := make([]byte, len(validBytes))
 	rand.Read(invalidBytes)
-	invalidCtxt := new(Ciphertext)
+	var invalidCtxt Ciphertext
 	err := invalidCtxt.UnmarshalBinary(invalidBytes)
 	if err != nil {
 		b.Fatalf("failed to unmarshal ciphertext: %s", err)

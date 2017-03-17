@@ -54,11 +54,11 @@ type Ciphertext struct {
 	V []byte
 }
 
-func (c *Ciphertext) String() string {
+func (c Ciphertext) String() string {
 	return fmt.Sprintf("ibe.Ciphertext(%s, %x)", c.U, c.V)
 }
 
-func (c *Ciphertext) MarshalBinary() ([]byte, error) {
+func (c Ciphertext) MarshalBinary() ([]byte, error) {
 	return append(c.U.Marshal(), c.V...), nil
 }
 
@@ -76,7 +76,7 @@ func (c *Ciphertext) UnmarshalBinary(data []byte) error {
 // http://cseweb.ucsd.edu/~mihir/cse208-06/libert-quisquater-ibe-acns-05.pdf
 // This schemes transforms the BF-IBE scheme (BasicIndent) into an IND-ID-CCA2
 // secure scheme.
-func Encrypt(random io.Reader, pub *MasterPublicKey, id []byte, msg []byte) *Ciphertext {
+func Encrypt(random io.Reader, pub *MasterPublicKey, id []byte, msg []byte) Ciphertext {
 	q := new(bn256.G2).HashToPoint(id)
 	g := bn256.Pair(pub.g1, q)
 
@@ -98,13 +98,13 @@ func Encrypt(random io.Reader, pub *MasterPublicKey, id []byte, msg []byte) *Cip
 
 	box := secretbox.Seal(nil, msg, new([24]byte), &sk)
 
-	return &Ciphertext{
+	return Ciphertext{
 		U: rp,
 		V: box,
 	}
 }
 
-func Decrypt(priv *IdentityPrivateKey, c *Ciphertext) ([]byte, bool) {
+func Decrypt(priv *IdentityPrivateKey, c Ciphertext) ([]byte, bool) {
 	e := bn256.Pair(c.U, priv.d)
 
 	shake := sha3.NewShake256()
