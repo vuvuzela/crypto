@@ -2,10 +2,12 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// Package bls implements aggregate signatures as described in
+// Package bls implements BLS aggregate signatures.
+//
+// This package implements the scheme described in
 // "Aggregate and Verifiably Encrypted Signatures from Bilinear Maps"
 // by Boneh, Gentry, Lynn, and Shacham (Eurocrypt 2003):
-// https://www.iacr.org/archive/eurocrypt2003/26560416/26560416.pdf
+// https://www.iacr.org/archive/eurocrypt2003/26560416/26560416.pdf.
 package bls // import "vuvuzela.io/crypto/bls"
 
 import (
