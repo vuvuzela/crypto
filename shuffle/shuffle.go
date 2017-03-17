@@ -1,4 +1,4 @@
-package shuffle
+package shuffle // import "vuvuzela.io/crypto/shuffle"
 
 import (
 	"encoding/binary"

@@ -1,4 +1,4 @@
-package rand
+package rand // import "vuvuzela.io/crypto/rand"
 
 import (
 	"crypto/rand"

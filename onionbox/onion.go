@@ -1,4 +1,4 @@
-package onionbox
+package onionbox // import "vuvuzela.io/crypto/onionbox"
 
 import (
 	"golang.org/x/crypto/nacl/box"

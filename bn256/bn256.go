@@ -9,7 +9,7 @@ See the original package for documentation.
 
 [1] http://cryptojedi.org/papers/dclxvi-20100714.pdf
 */
-package bn256
+package bn256 // import "vuvuzela.io/crypto/bn256"
 
 import (
 	"crypto/rand"

@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 // Package ibe implements Identity-Based Encryption (IBE).
-package ibe
+package ibe // import "vuvuzela.io/crypto/ibe"
 
 import (
 	"crypto/rand"

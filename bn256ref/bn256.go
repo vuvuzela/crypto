@@ -18,7 +18,7 @@
 // This is a fork of golang.org/x/crypto/bn256 that exposes internals and adds
 // methods for hashing into the groups. This package is mostly used to test the
 // faster (cgo-based) bn256 package at vuvuzela.io/crypto/bn256.
-package bn256ref
+package bn256ref // import "vuvuzela.io/crypto/bn256ref"
 
 import (
 	"crypto/rand"
