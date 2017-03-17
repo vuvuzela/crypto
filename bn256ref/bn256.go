@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// Package bn256 implements a particular bilinear group at the 128-bit security level.
+// Package bn256ref is a reference implementation of the BN-256 pairing-friendly curve.
 //
 // Bilinear groups are the basis of many of the new cryptographic protocols
 // that have been proposed over the past decade. They consist of a triplet of

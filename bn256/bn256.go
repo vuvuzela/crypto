@@ -1,5 +1,5 @@
 /*
-Package bn256 is a drop in replacement for the bn256 package from go.crypto.
+Package bn256 is an optimized implementation of BN-256 for amd64.
 
 It should be about 10x faster than the pure-Go version when run on an amd64
 based system. It wraps a patched version of
