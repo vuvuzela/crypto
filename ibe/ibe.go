@@ -3,6 +3,12 @@
 // license that can be found in the LICENSE file.
 
 // Package ibe implements Identity-Based Encryption (IBE).
+//
+// This package implements Hybrid-IBE from
+// "Identity Based Encryption Without Redundancy"
+// http://cseweb.ucsd.edu/~mihir/cse208-06/libert-quisquater-ibe-acns-05.pdf.
+// This schemes transforms the BF-IBE scheme (BasicIndent) into an
+// IND-ID-CCA2 secure scheme.
 package ibe // import "vuvuzela.io/crypto/ibe"
 
 import (
@@ -72,10 +78,6 @@ func (c *Ciphertext) UnmarshalBinary(data []byte) error {
 	return nil
 }
 
-// Implements Hybrid-IBE from "Identity Based Encryption Without Redundancy"
-// http://cseweb.ucsd.edu/~mihir/cse208-06/libert-quisquater-ibe-acns-05.pdf
-// This schemes transforms the BF-IBE scheme (BasicIndent) into an IND-ID-CCA2
-// secure scheme.
 func Encrypt(random io.Reader, pub *MasterPublicKey, id []byte, msg []byte) Ciphertext {
 	q := new(bn256.G2).HashToPoint(id)
 	g := bn256.Pair(pub.g1, q)
