@@ -6,6 +6,7 @@
 package shuffle // import "vuvuzela.io/crypto/shuffle"
 
 import (
+	"bufio"
 	"encoding/binary"
 	"io"
 )
@@ -14,8 +15,10 @@ type Shuffler []int
 
 func New(rand io.Reader, n int) Shuffler {
 	p := make(Shuffler, n)
+	buf := make([]byte, 4)
+	rr := bufio.NewReader(rand)
 	for i := range p {
-		p[i] = intn(rand, i+1)
+		p[i] = intn(rr, uint32(i+1), buf)
 	}
 	return p
 }
@@ -34,17 +37,16 @@ func (s Shuffler) Unshuffle(x [][]byte) {
 	}
 }
 
-func intn(rand io.Reader, n int) int {
+func intn(rand *bufio.Reader, n uint32, buf []byte) int {
 	max := ^uint32(0)
-	m := max % uint32(n)
-	r := make([]byte, 4)
+	m := max - (max % n)
 	for {
-		if _, err := rand.Read(r); err != nil {
+		if _, err := rand.Read(buf); err != nil {
 			panic(err)
 		}
-		x := binary.BigEndian.Uint32(r)
-		if x < max-m {
-			return int(x % uint32(n))
+		x := binary.BigEndian.Uint32(buf)
+		if x < m {
+			return int(x % n)
 		}
 	}
 }

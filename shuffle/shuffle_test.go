@@ -40,3 +40,9 @@ func TestShuffle(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkNew(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		New(rand.Reader, 50000)
+	}
+}
