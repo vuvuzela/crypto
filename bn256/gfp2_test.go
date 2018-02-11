@@ -93,7 +93,7 @@ func expectEqual(t *testing.T, a *fp2e, A *bn256ref.GFp2) {
 		t.Fatalf("got nil, want %s", A)
 	}
 	if a != nil && A == nil {
-		t.Fatalf("want nil, got %s", a)
+		t.Fatalf("want nil, got %v", a)
 	}
 	if a != nil && A != nil {
 		if !A.Eq(a.Ref()) {

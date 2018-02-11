@@ -180,7 +180,7 @@ func TestRandomG2(t *testing.T) {
 		_, g2, _ := RandomG2(rand.Reader)
 		po := new(twistPoint).Mul(g2.p, Order)
 		if !po.IsInfinity() {
-			t.Errorf("pt * Order is not infinity: %s", g2.p)
+			t.Errorf("pt * Order is not infinity: %v", g2.p)
 		}
 	}
 }
