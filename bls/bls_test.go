@@ -96,3 +96,57 @@ func TestKnownAnswer(t *testing.T) {
 		t.Fatalf("got %s, want %s", actual, expected)
 	}
 }
+
+func generateTestcases(n int) (msgs [][]byte, pubs []*PublicKey, prvs []*PrivateKey, sigs []Signature) {
+	msgs = make([][]byte, 0, n)
+	pubs = make([]*PublicKey, 0, n)
+	prvs = make([]*PrivateKey, 0, n)
+	sigs = make([]Signature, 0, n)
+	for i := 0; i < n; i++ {
+		msg := randomMessage()
+		msgs = append(msgs, msg)
+		pub, prv, err := GenerateKey(rand.Reader)
+		if err != nil {
+			panic(err)
+		}
+		pubs = append(pubs, pub)
+		prvs = append(prvs, prv)
+
+		sig := Sign(prv, msg)
+		sigs = append(sigs, sig)
+	}
+	return
+}
+
+func BenchmarkVerifyAggregateSig(b *testing.B) {
+	msgs, pubs, _, sigs := generateTestcases(100)
+	b.Run("AggregateSignature", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			Aggregate(sigs...)
+		}
+	})
+	sig := Aggregate(sigs...)
+	b.Run("VerifyAggregateSignature", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			Verify(pubs, msgs, sig)
+		}
+	})
+}
+
+func BenchmarkVerifySig(b *testing.B) {
+	n := 100
+	msgs, pubs, _, sigs := generateTestcases(n)
+	pk := make([][]*PublicKey, n)
+	msg := make([][][]byte, n)
+	for i := 0; i < n; i++ {
+		pk[i] = []*PublicKey{pubs[i]}
+		msg[i] = [][]byte{msgs[i]}
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		for j := 0; j < n; j++ {
+			Verify(pk[j], msg[j], sigs[j])
+		}
+	}
+	b.StopTimer()
+}
