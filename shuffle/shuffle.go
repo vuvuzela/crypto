@@ -37,6 +37,20 @@ func (s Shuffler) Unshuffle(x [][]byte) {
 	}
 }
 
+func (s Shuffler) ShuffleInts(x []int) {
+	for i := range x {
+		j := s[i]
+		x[i], x[j] = x[j], x[i]
+	}
+}
+
+func (s Shuffler) UnshuffleInts(x []int) {
+	for i := len(x) - 1; i >= 0; i-- {
+		j := s[i]
+		x[i], x[j] = x[j], x[i]
+	}
+}
+
 func intn(rand *bufio.Reader, n uint32, buf []byte) int {
 	max := ^uint32(0)
 	m := max - (max % n)
