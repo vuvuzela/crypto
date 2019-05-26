@@ -41,6 +41,22 @@ func TestShuffle(t *testing.T) {
 	}
 }
 
+func TestMaxMultiple(t *testing.T) {
+	for _, n := range []uint32{2, 3, 5, 10, 15, 1<<10} {
+		m := maxMultiple(n)
+		if m%n != 0 {
+			t.Errorf("maxMultiple(%d) is not a multiple", n)
+			continue
+		}
+		// note that m + n will wrap around if m is maximal; this relies on
+		// uint32 modular arithmetic
+		if m + n > m {
+			t.Errorf("maxMultiple(%d) is not maximal", n)
+			continue
+		}
+	}
+}
+
 func BenchmarkNew(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		New(rand.Reader, 50000)
